@@ -3,257 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaston Dana - Portfolio</title>
+    <title>Oriel_FX - Audio Visualizer</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <div id="graph-container"></div>
 
-<header>
-    <nav>
-        <a href="/" class="logo gradient-text">Gaston Dana</a>
-        <button id="mobile-menu-button" class="mobile-menu-button">
-            <i class="fas fa-bars"></i>
-        </button>
-        <ul class="nav-links">
-            <li><a href="#about" class="gradient-text">About</a></li>
-            <li><a href="#projects" class="gradient-text">Projects</a></li>
-            <li><a href="#merch-shop" class="gradient-text">Oriel Merch</a></li>
-            <li><a href="#skills" class="gradient-text">Skills</a></li>
-            <li><a href="#contact" class="gradient-text">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+    <button id="play-pause-button">Play Music</button>
 
-<section id="hero">
-    <div class="hero-content">
-        <h1>Hello, I'm Gaston Dana</h1>
-        <p>A Full-Stack Developer Passionate About Building Innovative Solutions</p>
-        <a href="#projects" class="button">View My Work</a>
-    </div>
-    <div class="hero-image">
-        <img src="assets/Space Meditation.jpg" alt="Space Meditation Image">
-    </div>
-</section>
-
-<section id="about" class="section">
-    <div class="container">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-            <img src="assets/Image 2-2-25 at 9.19 PM.jpg" alt="Your Profile Picture" class="profile-picture">
-            <div class="about-text">
-                <p>
-                    I am a full stack engineer with a passion for software engineering, constantly building innovative solutions from robust Python frameworks like Flask and Django to dynamic Streamlit applications. My journey at Reality AI Lab and AdvancingX has seamlessly fused my foundational skills in Python and game development with cutting-edge advancements in the Generative AI realm. This year, I'm actively pushing the frontier, competing in my 5th+ Hackathon, having successfully submitted my first SESA Proposal, and now proudly launching my creative 30-second ad video editing services — blending technical prowess with compelling visual narratives.
-                </p>
-            </div>
+    <div class="control-panel">
+        <div class="control">
+            <label for="glowColor">Glow Color</label>
+            <input type="color" id="glowColor" value="#8309D5">
+        </div>
+        <div class="control">
+            <label for="pulse">Pulse Intensity</label>
+            <input type="range" id="pulse" min="0" max="3" step="0.1" value="1.5">
+        </div>
+        <div class="control shape-selector">
+            <button class="shape-btn" data-shape="cube">Cube</button>
+            <button class="shape-btn" data-shape="sphere">Sphere</button>
+            <button class="shape-btn" data-shape="icosahedron">Crystal</button>
         </div>
     </div>
-</section>
 
-<div id="graph-container"></div>
+    <button id="download-button">Download</button>
 
-<section id="projects" class="section">
-    <div class="container">
-        <h2 class="section-title">Projects</h2>
-        <p class="section-description">
-            My portfolio showcases a diverse range of AI-powered solutions, from emotionally intelligent conversational agents to RAG-backed research assistants and complex multi-agent orchestration systems. These projects highlight my expertise in shaping deeply human AI personas and translating intricate data into impactful, real-world applications.
-        </p>
-        <div class="projects-grid">
-            <div class="project">
-                <img src="assets/Stargate1.jpg" alt="StarGate" class="project-image">
-                <h3>Project Stargate and Bobot</h3>
-                <p>Interactive digital personas for gaming mentorship and coaching, enhancing player development.</p>
-                <a href="https://github.com/gastondana627/Stargate-and-Bobot" class="button" target="_blank">GitHub</a>
-                <a href="https://moonrock-stargate-and-bobot-game.streamlit.app" class="button" target="_blank">Play Game</a>
-            </div>
-            <div class="project">
-                <img src="assets/Peata Intro Promo.png" alt="Peata - AI Pet Reunification" class="project-image">
-                <h3>Peata - AI Pet Reunification</h3>
-                <p>Character-driven, RAG-backed virtual assistant for pet recovery, using image-matching.</p>
-                <a href="https://github.com/gastondana627/Peata" class="button" target="_blank">Github</a>
-                <a href="https://peata-sao.streamlit.app" class="button" target="_blank">Prototype</a>
-            </div>
-            <div class="project">
-                <img src="assets/Relic_Logo_1 copy.jpg" alt="Relic" class="project-image">
-                <h3>Relic - AI Tech Archaeological Study</h3>
-                <p>Persona-driven, RAG-backed AI research assistant as an interactive digital field guide using SRTM, S2, OT, and Google Earth, etc..</p>
-                <a href="https://github.com/gastondana627/Team-Relic-Xingu-Challenge" class="button" target="_blank">GitHub</a>
-                <a href="https://relic-openai-to-z-challenge.tech" class="button" target="_blank">Live Demo</a>
-                <a href="https://www.linkedin.com/posts/gaston-d-859653184_firsttimeforeverything-techarchaeology-xinguriver-activity-7351776858884988929-0012?utm_source=share&utm_medium=member_desktop&rcm=ACoAACuFtgUBVdf9kFE9Wlxn2qi6FBP2M0VX6Ds" class="button" target="_blank">More Anomaly Info</a>
-            </div>
-            <div class="project">
-                <img src="assets/SESA_1.png" alt="SESA Trifecta" class="project-image">
-                <h3>SESA Project Proposal</h3>
-                <p>Designed multi-agent AI with goal-oriented behaviors and emotional awareness for engaging narratives.</p>
-                <a href="https://www.linkedin.com/posts/gaston-d-859653184_sesa-spacetech-ai-activity-7353836444710260737-k045?utm_source=share&utm_medium=member_desktop&rcm=ACoAACuFtgUBVdf9kFE9Wlxn2qi6FBP2M0VX6Ds" class="button" target="_blank">More Info</a>
-            </div>
-            <div class="project">
-                <img src="assets/AA_1.jpg" alt="Astro Archive" class="project-image">
-                <h3>Astro Archive</h3>
-                <p>Engineered memory-aware agents capable of context switching and user-specific coaching.</p>
-                <a href="https://github.com/gastondana627/Mongo_DB_NASA_OSDR" class="button" target="_blank">GitHub</a>
-            </div>
-            <div class="project">
-                <img src="assets/Space For Health Challenge.png" alt="NASA Knowledge Graph" class="project-image">
-                <h3>NASA Knowledge Graph</h3>
-                <p>Mapped biological/omics data into Neo4j for contextual health reasoning for astronauts.</p>
-                <a href="https://github.com/gastondana627/spoke_genelab" class="button">Github</a>
-                <a href="https://www.linkedin.com/posts/gaston-d-859653184_spoke-nasa-team60-activity-7325938069293977601-T3ck?utm_source=share&utm_medium=member_desktop&rcm=ACoAACuFtgUBVdf9kFE9Wlxn2qi6FBP2M0VX6Ds" class="button">More Info</a>
-            </div>
+    <audio id="background-music" src="assets/music_fx_a_trap_beat_with_a_heavy_bass_butwith_techno-2.wav" loop></audio>
 
-        </div>
-        <button id="load-more-button" class="button" style="display: none;">Load More Projects</button>
-    </div>
-</section>
-
-<section id="merch-shop" class="section">
-    <div class="container">
-        <h2 class="section-title">Oriel Signal Merch</h2>
-        <p class="section-description">
-            Experience the confluence of intelligence and artistry. Our exclusive collection embodies the vision of Oriel Signal, bringing AI-enhanced creativity to your everyday.
-        </p>
-        <div class="merch-grid">
-            <div class="merch-item">
-                <img src="assets/oriel-merch-synthesis.jpg" alt="Oriel Signal Synthesis Glyph T-Shirt" class="merch-image">
-                <h3>Synthesis Glyph Tee</h3>
-                <p>Wear the core vision of blended intelligence.</p>
-            </div>
-            <div class="merch-item">
-                <img src="assets/oriel-merch-cognitive.jpg" alt="Oriel Signal Cognitive Architects Mug" class="merch-image">
-                <h3>Cognito Architect Mug</h3>
-                <p>Design your day with strategic precision.</p>
-            </div>
-            <div class="merch-item">
-                <img src="assets/oriel-merch-light.jpg" alt="Oriel Signal Choreographed Light Print" class="merch-image">
-                <h3>Choreographed Print</h3>
-                <p>Art in motion, woven by light.</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="[YOUR SHOPIFY STORE URL HERE]" class="button merch-button-cta">
-                🛍️ Shop The Signal
-            </a>
-        </div>
-    </div>
-</section>
-
-<section id="ad-services" class="section">
-    <div class="container">
-        <h2 class="section-title">AI-Enhanced Ad Services</h2>
-        <p class="section-description">
-            Amplify your message with precision. I specialize in crafting compelling 30-second video ads and dynamic content, leveraging advanced AI to bring your vision to life. From conceptualization to final delivery, let the Oriel Signal transform your narrative.
-        </p>
-        <div class="service-cta" style="text-align: center; margin-top: 40px;">
-            <a href="[LINK_TO_YOUR_APPOINTMENT_BOOKING_PAGE_OR_CONTACT_SECTION]" class="button service-button-cta">
-                <i class="fas fa-video"></i> Amplify Vision
-            </a>
-             <p style="margin-top: 15px; font-size: 0.9em; color: var(--text-on-dark-bg);">
-                Click to schedule a consultation on your next project.
-            </p>
-        </div>
-    </div>
-</section>
-<section id="skills" class="section">
-    <div class="container">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills-grid">
-            <div class="skill">
-                <i class="fab fa-python"></i>
-                <p class="gradient-text">Python</p>
-            </div>
-            <div class="skill">
-                <i class="fab fa-html5"></i>
-                <p class="gradient-text">HTML5</p>
-            </div>
-            <div class="skill">
-                <i class="fab fa-css3-alt"></i>
-                <p class="gradient-text">CSS3</p>
-            </div>
-            <div class="skill">
-                <i class="fab fa-js"></i>
-                <p class="gradient-text">JavaScript</p>
-            </div>
-            <div class="skill">
-                <i class="fab fa-react"></i>
-                <p class="gradient-text">React</p>
-            </div>
-            <div class="skill">
-                <i class="fab fa-node-js"></i>
-                <p class="gradient-text">Node.js</p>
-            </div>
-            <div class="skill">
-                <i class="fas fa-brain"></i>
-                <p class="gradient-text">AI Agents</p>
-            </div>
-            <div class="skill">
-                <i class="fas fa-database"></i>
-                <p class="gradient-text">RAG</p>
-            </div>
-            <div class="skill">
-                <i class="fas fa-cloud"></i>
-                <p class="gradient-text">Cloud/DevOps</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="section">
-    <div class="container">
-        <h2 class="section-title">Contact Me</h2>
-        <form id="contact-form" action="https://formspree.io/f/meoerdwl" method="POST">
-            <input type="hidden" name="_next" value="thankyou.html">
-            <div class="form-group">
-                <label for="name" class="gradient-text">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email" class="gradient-text">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message" class="gradient-text">Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="button">Send Message</button>
-        </form>
-        <div id="form-status"></div>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <p>© 2025 Gasman</p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/gaston-d-859653184/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/gastondana627" target="_blank"><i class="fab fa-github"></i></a>
-            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="gastondana627" data-color="#BD5FFF" data-emoji="✨" data-font="Cookie" data-text="Buy Me A Coffee" data-outline-color="#000000" data-font-color="#FFFFFF" data-coffee-color="#ffffff" ></script>
-        </div>
-    </div>
-</footer>
-
-<label class="theme-switch" for="checkbox">
-    <input type="checkbox" id="checkbox" />
-    <div class="slider round"></div>
-</label>
-
-<button id="scroll-to-top-button" class="scroll-to-top-button">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<div class="music-controls">
-    <button id="play-pause-button"><i class="fas fa-play"></i></button>
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
-</div>
-
-<audio id="background-music" src="assets/music_fx_a_trap_beat_with_a_heavy_bass_butwith_techno-2.wav" autoplay loop preload="auto"></audio>
-<script src="script.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="graph.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+    <script src="graph.js"></script>
 </body>
 </html>
