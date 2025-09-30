@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBarInner = document.getElementById('progress-bar-inner');
     const downloadsRemainingText = document.getElementById('downloads-remaining');
     const modalStatus = document.getElementById('modal-status');
+    const bmacButton = document.getElementById('bmac-button');
+    const bmacQrcode = document.getElementById('bmac-qrcode');
+
+    // New elements from the refactored modal
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const choiceView = document.getElementById('choice-view');
+    const progressView = document.getElementById('progress-view');
+    const downloadGifButton = document.getElementById('download-gif-button');
+    const downloadMp3Button = document.getElementById('download-mp3-button');
 
     let audioContext;
     let audioInitialized = false;
@@ -30,34 +39,43 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadsRemainingText.textContent = `${getDownloadsRemaining()} free downloads remaining.`;
     }
 
-    // --- Download Button Logic (with fix for multiple downloads) ---
+    // --- MODAL CONTROL LOGIC ---
     downloadButton.addEventListener('click', () => {
+        // Reset the modal to show the initial choices
+        choiceView.classList.remove('hidden');
+        progressView.classList.add('hidden');
+        progressModal.classList.remove('modal-hidden');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        progressModal.classList.add('modal-hidden');
+    });
+
+    // --- GIF DOWNLOAD LOGIC ---
+    downloadGifButton.addEventListener('click', () => {
         if (getDownloadsRemaining() <= 0) {
             alert("You've used all your free downloads! Clear browser data to reset for this prototype.");
             return;
         }
         
+        choiceView.classList.add('hidden');
+        progressView.classList.remove('hidden');
+
         window.capturer = new CCapture({
-            format: 'gif',
-            workersPath: 'assets/',
-            framerate: 30,
+            format: 'gif', workersPath: 'assets/', framerate: 30,
             onProgress: (progress) => {
                 const percentage = Math.round(progress * 100);
                 progressBarInner.style.width = `${percentage}%`;
                 modalStatus.textContent = `Processing... ${percentage}%`;
             }
         });
-
         useDownload();
         progressBarInner.style.width = '0%';
         modalStatus.textContent = 'Recording for 30 seconds...';
-        progressModal.classList.remove('modal-hidden');
         capturer.start();
-
         if (!audioInitialized || (audioContext && audioContext.state === 'suspended')) {
             window.togglePlayPause();
         }
-
         setTimeout(() => {
             capturer.stop();
             modalStatus.textContent = 'Finalizing... Download will begin shortly.';
@@ -68,7 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 30000);
     });
 
-    // --- EXPANDED Master list of all available shapes ---
+    // --- MP3 DOWNLOAD LOGIC ---
+    downloadMp3Button.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.href = audioElement.src;
+        link.download = 'Oriel_FX_Audio.mp3';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        progressModal.classList.add('modal-hidden');
+    });
+
+    // --- Master list of all available shapes ---
     const allShapes = [
         { id: 'cube', name: 'Cube' }, { id: 'sphere', name: 'Sphere' },
         { id: 'icosahedron', name: 'Crystal' }, { id: 'torus', name: 'Donut' },
@@ -165,6 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
     randomizeButton.addEventListener('click', () => {
         updateShapeButtons();
     });
+    
+    // --- Buy Me a Coffee Hover Logic ---
+    bmacButton.addEventListener('mouseover', () => { bmacQrcode.classList.remove('qrcode-hidden'); });
+    bmacButton.addEventListener('mouseout', () => { bmacQrcode.classList.add('qrcode-hidden'); });
 
     // --- Initial Setup ---
     updateDownloadCounter();

@@ -1,10 +1,10 @@
 # Oriel_FX - Audio-Reactive 3D Visualizer
 
-A lightweight, customizable 3D visualizer that reacts to music in real-time, built with Three.js and the Web Audio API.
+A lightweight, customizable 3D visualizer that reacts to music in real-time, built with Three.js and the Web Audio API. This prototype serves as a demonstration and the foundation for a future pro version.
 
 ---
 
-[Insert a GIF of the app in action here]
+[Insert a GIF or WebM of the app in action here]
 
 ### ✨ Features
 
@@ -12,7 +12,8 @@ A lightweight, customizable 3D visualizer that reacts to music in real-time, bui
 * **Customizable UI:** An interactive control panel allows users to change shapes, colors, and animation intensity on the fly.
 * **Dynamic Shape Library:** A large, expandable library of classic and procedurally generated shapes. The "Randomize" button provides a new selection of three unique shapes each time.
 * **User Audio Upload:** Users can upload their own MP3 or WAV files to drive the visualization.
-* **GIF Export:** A built-in recorder captures a 30-second, high-framerate GIF of the animation for easy sharing.
+* **WebM Video Export:** A built-in recorder captures a 30-second, high-quality `.webm` video file, including audio.
+* **MP3 Audio Export:** A simple option to download the currently loaded audio track.
 * **Usage Limiter:** A prototype download limiter tracks usage in the browser's `localStorage`.
 
 ### 🚀 Live Demo

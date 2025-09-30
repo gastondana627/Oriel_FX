@@ -118,6 +118,38 @@ body, html {
     transition: background-color 0.3s ease;
 }
 
+/* --- Styles for Buy Me A Coffee & QR Code --- */
+#bmac-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #8309D5; /* Default color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+#bmac-qrcode {
+    position: absolute;
+    left: 105%; /* Position it to the right of the control panel */
+    top: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.qrcode-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* --- Styles for Progress Modal & Download Counter --- */
 .modal-hidden {
     display: none !important;
@@ -150,8 +182,6 @@ body, html {
     margin: 10px 0 0 0;
 }
 
-
-
 /* --- Mobile Responsiveness --- */
 @media (max-width: 600px) {
     .control-panel {
@@ -166,4 +196,68 @@ body, html {
         padding: 10px 20px;
         font-size: 1rem;
     }
+}
+
+.modal-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    background-color: #555;
+    color: white;
+    border: 1px solid #777;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+.hidden {
+    display: none;
+}
+
+.modal-content {
+    position: relative; /* Needed for the close button */
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+
+/* --- Add these new rules for the Modal Menu --- */
+.hidden {
+    display: none !important;
+}
+.modal-content {
+    position: relative;
+}
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
 }
