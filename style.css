@@ -149,3 +149,21 @@ body, html {
     opacity: 0.7;
     margin: 10px 0 0 0;
 }
+
+
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    .control-panel {
+        top: 10px;
+        left: 10px;
+        right: 10px; /* Allow it to span the width */
+        width: auto;
+        gap: 10px;
+    }
+
+    #play-pause-button, #download-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
