@@ -1,9 +1,115 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Get all elements ---
     const playPauseButton = document.getElementById('play-pause-button');
     const audioElement = document.getElementById('background-music');
+    const glowColorInput = document.getElementById('glowColor');
+    const pulseInput = document.getElementById('pulse');
+    const downloadButton = document.getElementById('download-button');
+    const audioUploadInput = document.getElementById('audioUpload');
+    const randomizeButton = document.getElementById('randomize-button');
+    const shapeSelector = document.querySelector('.shape-selector');
+    const progressModal = document.getElementById('progress-modal');
+    const progressBarInner = document.getElementById('progress-bar-inner');
+    const downloadsRemainingText = document.getElementById('downloads-remaining');
+    const modalStatus = document.getElementById('modal-status');
+
     let audioContext;
     let audioInitialized = false;
 
+    // --- DOWNLOAD & USAGE LIMIT LOGIC ---
+    function getDownloadsRemaining() {
+        const count = localStorage.getItem('orielFxDownloads');
+        return count === null ? 3 : parseInt(count);
+    }
+    function useDownload() {
+        let count = getDownloadsRemaining();
+        localStorage.setItem('orielFxDownloads', Math.max(0, count - 1));
+        updateDownloadCounter();
+    }
+    function updateDownloadCounter() {
+        downloadsRemainingText.textContent = `${getDownloadsRemaining()} free downloads remaining.`;
+    }
+
+    // --- Download Button Logic (with fix for multiple downloads) ---
+    downloadButton.addEventListener('click', () => {
+        if (getDownloadsRemaining() <= 0) {
+            alert("You've used all your free downloads! Clear browser data to reset for this prototype.");
+            return;
+        }
+        
+        window.capturer = new CCapture({
+            format: 'gif',
+            workersPath: 'assets/',
+            framerate: 30,
+            onProgress: (progress) => {
+                const percentage = Math.round(progress * 100);
+                progressBarInner.style.width = `${percentage}%`;
+                modalStatus.textContent = `Processing... ${percentage}%`;
+            }
+        });
+
+        useDownload();
+        progressBarInner.style.width = '0%';
+        modalStatus.textContent = 'Recording for 30 seconds...';
+        progressModal.classList.remove('modal-hidden');
+        capturer.start();
+
+        if (!audioInitialized || (audioContext && audioContext.state === 'suspended')) {
+            window.togglePlayPause();
+        }
+
+        setTimeout(() => {
+            capturer.stop();
+            modalStatus.textContent = 'Finalizing... Download will begin shortly.';
+            capturer.save();
+            setTimeout(() => {
+                progressModal.classList.add('modal-hidden');
+            }, 4000);
+        }, 30000);
+    });
+
+    // --- EXPANDED Master list of all available shapes ---
+    const allShapes = [
+        { id: 'cube', name: 'Cube' }, { id: 'sphere', name: 'Sphere' },
+        { id: 'icosahedron', name: 'Crystal' }, { id: 'torus', name: 'Donut' },
+        { id: 'dodecahedron', name: 'Gem' }, { id: 'torusKnot', name: 'Knot' },
+        { id: 'cone', name: 'Cone' }, { id: 'cylinder', name: 'Cylinder' },
+        { id: 'octahedron', name: 'Octahedron' }, { id: 'tetrahedron', name: 'Pyramid' },
+        { id: 'ring', name: 'Ring' }, { id: 'plane', name: 'Plane' },
+        { id: 'spikySphere', name: 'Spiky' }, { id: 'torusLarge', name: 'Hoop' },
+        { id: 'conePointy', name: 'Spire' }, { id: 'crystalTall', name: 'Shard' },
+        { id: 'twistedBox', name: 'Twisted Box' }, { id: 'wavyPlane', name: 'Wavy Plane' },
+        { id: 'polyStar', name: 'Star' }, { id: 'randomPoly', name: 'Asteroid' }
+    ];
+    let currentShapes = [];
+
+    // --- Function to update the shape buttons in the UI ---
+    function updateShapeButtons() {
+        shapeSelector.innerHTML = '';
+        let availableShapes = allShapes.filter(shape => !currentShapes.some(current => current.id === shape.id));
+        if (availableShapes.length < 3) {
+            availableShapes = allShapes;
+            currentShapes = [];
+        }
+        const newRandomShapes = [...availableShapes].sort(() => 0.5 - Math.random()).slice(0, 3);
+        currentShapes = newRandomShapes;
+        newRandomShapes.forEach(shapeInfo => {
+            const button = document.createElement('button');
+            button.className = 'shape-btn dynamic-color';
+            button.textContent = shapeInfo.name;
+            button.setAttribute('data-shape', shapeInfo.id);
+            button.style.backgroundColor = glowColorInput.value;
+            button.addEventListener('click', () => {
+                if (window.config && window.recreateShape) {
+                    window.config.shape = shapeInfo.id;
+                    window.recreateShape();
+                }
+            });
+            shapeSelector.appendChild(button);
+        });
+    }
+
+    // --- Play/Pause Logic ---
     window.togglePlayPause = function() {
         if (!audioInitialized) {
             audioContext = initAudio();
@@ -20,17 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
             playPauseButton.textContent = "Play";
             if (window.setAnimationPaused) window.setAnimationPaused(true);
         }
-    }
+    };
     playPauseButton.addEventListener('click', window.togglePlayPause);
 
-    const glowColorInput = document.getElementById('glowColor');
-    const pulseInput = document.getElementById('pulse');
-    const downloadButton = document.getElementById('download-button');
-
+    // --- Control Panel Listeners ---
     glowColorInput.addEventListener('input', (event) => {
+        const newColor = event.target.value;
         if (window.config) {
-            window.config.glowColor = parseInt(event.target.value.replace('#', '0x'));
-            downloadButton.style.backgroundColor = event.target.value;
+            window.config.glowColor = parseInt(newColor.replace('#', '0x'));
+            document.querySelectorAll('.dynamic-color').forEach(elem => {
+                elem.style.backgroundColor = newColor;
+            });
         }
     });
 
@@ -39,15 +145,28 @@ document.addEventListener('DOMContentLoaded', () => {
             window.config.pulseIntensity = parseFloat(event.target.value);
         }
     });
-
-    const shapeButtons = document.querySelectorAll('.shape-btn');
-    shapeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const shapeName = button.getAttribute('data-shape');
-            if (window.config && window.recreateShape) {
-                window.config.shape = shapeName;
-                window.recreateShape();
-            }
-        });
+    
+    audioUploadInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (audioContext && audioContext.state === 'running') {
+            window.togglePlayPause();
+        }
+        const fileURL = URL.createObjectURL(file);
+        audioElement.src = fileURL;
+        audioElement.load();
+        playPauseButton.textContent = "Play New Track";
+        if (!audioInitialized) {
+            audioContext = initAudio();
+            audioInitialized = true;
+        }
     });
+
+    randomizeButton.addEventListener('click', () => {
+        updateShapeButtons();
+    });
+
+    // --- Initial Setup ---
+    updateDownloadCounter();
+    updateShapeButtons();
 });
